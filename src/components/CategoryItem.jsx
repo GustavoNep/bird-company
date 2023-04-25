@@ -31,6 +31,11 @@ const Button = styled.button`
     color: gray;
     cursor: pointer;
     font-weight: 600;
+    transition: all 0.5s ease;
+    &:hover{
+        
+        transform: scale(1.1);
+    }    
 `
 const Title = styled.h1`
     color: white;

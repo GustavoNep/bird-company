@@ -16,15 +16,13 @@ const Info = styled.div`
     align-items: center;
     justify-content: center;
     transition: all 0.5s ease;
-
-
+    cursor: pointer;
 `
 const Container = styled.div`
     flex: 1;
     margin: 5px;
     min-height: 280px;
     height: 350px;
-    flex-wrap: wrap;
     justify-content: center;
     display: flex;
     align-items: center;
@@ -58,7 +56,7 @@ const Icon = styled.div`
     justify-content: center;
     margin: 10px;
     transition: all 0.5s ease;
-    cursor: pointer;
+    
 
     &:hover{
         background-color: #e9f5f5;
