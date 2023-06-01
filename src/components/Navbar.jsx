@@ -3,6 +3,9 @@ import { Search, ShoppingCartOutlined } from "@material-ui/icons";
 import React from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../redux/userRedux"; 
 
 const Container = styled.div`
   height: 60px;
@@ -13,7 +16,6 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   ${mobile({ padding: "10px 0px" })}
-
   justify-content: space-between;
 `;
 
@@ -48,7 +50,7 @@ const Right = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  ${mobile({ flex: 2 , justifyContent: "center"})}
+  ${mobile({ flex: 2, justifyContent: "center" })}
 `;
 
 const Logo = styled.h1`
@@ -64,30 +66,55 @@ const MenuItem = styled.div`
   ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
 
+const LogoutButton = styled(MenuItem)`
+  color: red;
+`;
+
 const Navbar = () => {
+  const quantity = useSelector((state) => state.cart.quantity);
+  const user = useSelector((state) => state.user.currentUser);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    // Lógica para realizar o logout
+    dispatch(logout()); // Dispatch da ação de logout
+  };
+
   return (
     <Container>
       <Wrapper>
         <Left>
           <Language>BR</Language>
           <SearchContainer>
-            <Input placeholder="Search"/>
+            <Input placeholder="Search" />
             <Search style={{ color: "gray", fontSize: 16 }} />
           </SearchContainer>
         </Left>
 
         <Center>
-          <Logo>BIRD</Logo>
+          <Logo>NIKIE</Logo>
         </Center>
 
         <Right>
-          <MenuItem>REGISTER</MenuItem>
-          <MenuItem>SIGN IN </MenuItem>
-          <MenuItem>
-            <Badge badgeContent={2} color="primary">
-              <ShoppingCartOutlined />
-            </Badge>
-          </MenuItem>
+          {user ? (
+            <LogoutButton onClick={handleLogout}>LOG OUT</LogoutButton>
+          ) : (
+            <>
+              <Link to="/register">
+                <MenuItem>REGISTER</MenuItem>
+              </Link>
+              <Link to="/login">
+                <MenuItem>SIGN IN</MenuItem>
+              </Link>
+            </>
+          )}
+          <Link to="/cart">
+            <MenuItem>
+              <Badge badgeContent={quantity} color="secondary">
+                <ShoppingCartOutlined />
+              </Badge>
+            </MenuItem>
+          </Link>
         </Right>
       </Wrapper>
     </Container>
